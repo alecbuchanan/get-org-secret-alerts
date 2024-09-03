@@ -49,28 +49,31 @@ async function getOrgSecretAlerts() {
     const records = [];
     let counter = 1; // Initialize counter
 
-    for (const alert of alerts) {
+    for (let i = 0; i < alerts.length; i++) {
+      const alert = alerts[i];
+      console.log(`Processing alert ${i + 1} of ${alerts.length}`);
+
       if (!alert.locations_url) {
         console.log(`Alert ${alert.number} is missing locations_url`);
         continue;
       }
 
-      console.log(`Processing alert ${alert.number}`);
-      let locationResponse;
+      let locations;
       try {
-        locationResponse = await octokit.request(`GET ${alert.locations_url}`, {
+        locations = await octokit.paginate(`GET ${alert.locations_url}`, {
           headers: {
             'X-GitHub-Api-Version': '2022-11-28'
-          }
+          },
+          per_page: 100
         });
       } catch (error) {
         console.error(`Failed to fetch locations for alert ${alert.number}:`, error);
         continue;
       }
 
-      console.log(`Location Response: ${JSON.stringify(locationResponse, null, 2)}`);
+      console.log(`Locations: ${JSON.stringify(locations, null, 2)}`);
 
-      locationResponse.data.forEach(location => {
+      locations.forEach(location => {
         let url;
         let path;
 
