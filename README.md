@@ -1,4 +1,5 @@
 # get-org-secret-alerts
+![CodeQL](https://github.com/alecbuchanan/get-org-secret-alerts/workflows/CodeQL/badge.svg)
 
 This project fetches secret scanning alerts for a specified GitHub organization and writes the results to a CSV file.
 
