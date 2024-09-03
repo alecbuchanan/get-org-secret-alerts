@@ -1,6 +1,6 @@
 // getOrgSecretAlerts.js
 import 'dotenv/config';
-import { Octokit } from "@octokit/core";
+import { Octokit } from "octokit";
 import { createObjectCsvWriter as createCsvWriter } from 'csv-writer';
 
 // Initialize Octokit with authentication
@@ -37,14 +37,14 @@ const extractRepoInfoFromCommitUrl = (commitUrl) => {
  */
 async function getOrgSecretAlerts() {
   try {
-    const response = await octokit.request('GET /orgs/{org}/secret-scanning/alerts', {
+    const alerts = await octokit.paginate('GET /orgs/{org}/secret-scanning/alerts', {
       org: process.env.GITHUB_ORG,
+      per_page: 100,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28'
       }
     });
 
-    const alerts = response.data;
     console.log(`Found ${alerts.length} alerts`);
     const records = [];
     let counter = 1; // Initialize counter
