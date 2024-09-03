@@ -33,19 +33,6 @@ const extractRepoInfoFromCommitUrl = (commitUrl) => {
 };
 
 /**
- * Extracts repository information from other URLs.
- * @param {string} url - The URL.
- * @returns {Object} An object containing orgName and repoName.
- */
-const extractRepoInfoFromOtherUrls = (url) => {
-  const urlParts = url.split('/');
-  return {
-    orgName: urlParts[5],
-    repoName: urlParts[6]
-  };
-};
-
-/**
  * Fetches and processes organization secret alerts.
  */
 async function getOrgSecretAlerts() {
@@ -104,42 +91,42 @@ async function getOrgSecretAlerts() {
               break;
             case 'issue_title':
               commitUrl = location.details.issue_title_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'issue_body':
               commitUrl = location.details.issue_body_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'issue_comment':
               commitUrl = location.details.issue_comment_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'pull_request_title':
               commitUrl = location.details.pull_request_title_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'pull_request_body':
               commitUrl = location.details.pull_request_body_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'pull_request_comment':
               commitUrl = location.details.pull_request_comment_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'pull_request_review':
               commitUrl = location.details.pull_request_review_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             case 'pull_request_review_comment':
               commitUrl = location.details.pull_request_review_comment_url;
-              ({ orgName, repoName } = extractRepoInfoFromOtherUrls(commitUrl));
+              ({ orgName, repoName } = extractRepoInfoFromCommitUrl(commitUrl));
               path = `${orgName}/${repoName}`;
               break;
             default:
